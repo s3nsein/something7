@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frontier Labs</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48 32x32 16x16">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/audience.css">
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<!-- Audience selector, language, font and theme: always on screen, above the intro and the lab. The pills are filled in by js/audience.js. -->
+<div class="topbar" id="topbar">
+  <div class="audbar" role="group" aria-labelledby="audlabel"><span id="audlabel" class="audlabel">Who is exploring?</span><div class="audpills" id="audpills"></div></div>
+  <div class="tb-item"><label for="lang" class="vh" data-i18n="lang">Language</label><span class="tb-ico" aria-hidden="true">文A</span><select id="lang" class="langsel"></select></div>
+  <button id="themeBtn" class="tb-btn" type="button" data-i18n-aria="theme_toggle"><svg class="i-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg></button>
+</div>
+<div id="intro" class="intro">
+  <div>
+    <div class="text"><h1 data-i18n="intro_title">Frontier Labs</h1><p class="sub" data-i18n="intro_sub"></p></div>
+    <div class="globe-wrap"><button id="globeBtn" class="globe-btn" data-i18n-aria="intro_hint"><canvas id="globe"></canvas></button></div>
+    <div class="text"><p class="intro-hint" data-i18n="intro_hint"></p><p class="intro-spin" data-i18n="intro_spin"></p><p class="audnote" id="audnoteIntro"></p><button class="skip" id="skip" data-i18n="intro_skip"></button></div>
+  </div>
+</div>
+<div id="flash" aria-hidden="true"></div>
+<div id="app" class="app" style="display:none">
+<section class="band story" id="story"><div class="wrap">
+  <div class="story-hero reveal">
+    <h1 data-i18n="story_title"></h1>
+    <p class="story-lead" data-i18n="story_lead"></p>
+  </div>
+  <div class="story-grid">
+    <div class="card story-card reveal"><svg class="sc-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="17" cy="24" r="10" class="ico-e"/><circle cx="34" cy="24" r="7" class="ico-m"/><path d="M27 24h0" /></svg><h3 data-i18n="story_h1"></h3><p data-i18n="story_p1"></p></div>
+    <div class="card story-card reveal"><svg class="sc-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="10" width="30" height="28" rx="5" class="ico-l"/><path d="M15 31l6-8 5 5 7-10" class="ico-k"/></svg><h3 data-i18n="story_h2"></h3><p data-i18n="story_p2"></p></div>
+    <div class="card story-card reveal"><svg class="sc-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15" class="ico-l"/><path d="M24 24l8-6" class="ico-k"/><circle cx="24" cy="24" r="2.6" class="ico-d"/></svg><h3 data-i18n="story_h3"></h3><p data-i18n="story_p3"></p></div>
+  </div>
+  <div class="card story-analog reveal">
+    <div><h2 data-i18n="story_analog_h"></h2><p data-i18n="story_analog_p"></p></div>
+    <div><h2 data-i18n="story_who_h"></h2><p data-i18n="story_who_p"></p><p class="small mute" data-i18n="story_sources"></p></div>
+  </div>
+  <a class="scroll-cue" href="#solarsec"><span data-i18n="story_scroll"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></a>
+</div></section>
+
+<section class="band" id="solarsec"><div class="wrap">
+  <div class="solar reveal">
+    <div class="orbit"><canvas id="orrery" aria-label="" role="img" data-i18n-aria="solar_alt"></canvas></div>
+    <div class="solar-text">
+      <h2 data-i18n="solar_h"></h2>
+      <p data-i18n="solar_p"></p>
+      <button class="go" id="toLab" type="button" data-i18n="story_enter"></button>
+    </div>
+  </div>
+</div></section>
+
+<div id="lab">
+<header class="band"><div class="wrap top">
+  <div class="brand">
+    <button id="mini" class="mini" data-i18n-aria="back"><canvas id="miniGlobe"></canvas></button>
+    <div><h2 class="labtitle" data-i18n="lab_title"></h2><p class="lede" data-i18n="lede"></p><p class="audnote" id="audnote"></p></div>
+  </div>
+</div></header>
+
+<!-- Audience panel: Kids, Students, Educators and Manager content appears here. Reference material only, never results. -->
+<section class="band audpanel hidden" id="audpanel"><div class="wrap" id="audpanelin"></div></section>
+
+<section class="band steps" id="compare"><div class="wrap">
+  <div class="card step reveal">
+    <h2><span class="num">1</span><span data-i18n="step1"></span></h2>
+    <div class="row three">
+      <div><label for="cbody" data-i18n="body"></label><select id="cbody"><option value="mars" data-i18n="b_mars"></option><option value="moon" data-i18n="b_moon"></option><option value="mercury" data-i18n="b_mercury"></option><option value="europa" data-i18n="b_europa"></option><option value="titan" data-i18n="b_titan"></option><option value="other" data-i18n="b_other"></option></select></div>
+      <div><label for="cname" data-i18n="celSite"></label><input type="text" id="cname" data-i18n-ph="celSitePh"></div>
+      <div><label for="ename" data-i18n="earthSite"></label><input type="text" id="ename" data-i18n-ph="earthSitePh"></div>
+    </div>
+  </div>
+
+  <div class="card step reveal">
+    <h2><span class="num">2</span><span data-i18n="step2"></span></h2>
+    <p class="mute" data-i18n="step2help"></p>
+    <div id="topics" class="topics"></div>
+  </div>
+
+  <div class="step reveal">
+    <h2 class="stephead"><span class="num">3</span><span data-i18n="step3"></span></h2>
+    <p class="mute" data-i18n="step3help"></p>
+    <div id="blocks" class="blocks"></div>
+  </div>
+
+  <div class="lib reveal" id="libsec">
+    <div class="libhead"><div><h2 data-i18n="lib_h"></h2><p class="mute" data-i18n="lib_p"></p></div></div>
+    <div class="libfilters" id="libfilters" role="group"></div>
+    <div class="libgrid" id="libgrid"></div>
+    <p class="small mute" id="libnote" data-i18n="lib_note"></p>
+  </div>
+
+  <div class="actions reveal">
+    <button class="go big" id="run" data-i18n="analyze"></button>
+    <button id="ex1" data-i18n="loadEx"></button>
+    <button id="ex2" class="lv-t" data-i18n="loadBad"></button>
+    <span id="status" class="small mute" aria-live="polite"></span>
+  </div>
+  <div id="runerr"></div>
+  <p class="small mute" id="exnote" data-i18n="exNote" style="margin-top:10px"></p>
+</div></section>
+
+<!-- Zero state: shown until the visitor runs a comparison. Words only, no numbers or charts. -->
+<section class="band" id="zerostate"><div class="wrap"><div class="card zero"><div><h2 data-i18n="zero_h">No analysis yet</h2><p class="mute" data-i18n="zero_p"></p></div></div></div></section>
+
+<div id="results" class="hidden">
+<section class="band" id="overallsec"><div class="wrap"><div class="card overall" id="overall"></div></div></section>
+
+<!-- Audience results: kid summary, scientist similarity matrix or manager decision brief. -->
+<section class="band hidden" id="audresults"><div class="wrap" id="audresultsin"></div></section>
+
+<section class="band" id="detailsec"><div class="wrap">
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="unitpick lv-t">
+    <div id="uTbox"><label for="uT" data-i18n="units_temp"></label><select id="uT"><option value="C">°C</option><option value="K">K</option></select></div>
+    <div id="uZbox"><label for="uZ" data-i18n="units_elev"></label><select id="uZ"><option value="m">m</option><option value="km">km</option></select></div>
+  </div>
+  <div class="hero card">
+    <div>
+      <div class="small mute" id="scorelabel"></div>
+      <div class="score" id="score"></div>
+      <div class="ci lv-t" id="ci"></div>
+      <div class="verdict" id="verdict"></div>
+      <p id="vline" class="small mute"></p>
+      <div class="bars" id="bars"></div>
+    </div>
+    <div>
+      <h3 id="h1fig"></h3>
+      <div id="fhero"></div>
+      <div class="legend" id="lhero"></div>
+      <p class="small mute" id="chero"></p>
+    </div>
+  </div>
+</div></section>
+
+<section class="band reveal" data-depth="assess"><div class="wrap ai">
+  <h2 data-i18n="assessment"></h2>
+  <div id="ai"></div>
+</div></section>
+
+<section class="band reveal" data-depth="tech"><div class="wrap">
+  <h2 id="hstats"></h2>
+  <div class="scroll"><table class="stack" id="tstats"></table></div>
+  <div id="dq"></div>
+</div></section>
+
+<section class="band reveal" data-depth="tech"><div class="wrap grid2">
+  <div><h2 id="hf1"></h2><div id="f1"></div><div class="legend" id="l1"></div><p class="small mute" id="c1"></p></div>
+  <div><h2 id="hf2"></h2><div id="f2"></div><div class="legend" id="l2"></div><p class="small mute" id="c2"></p></div>
+</div></section>
+
+<section class="band reveal" data-depth="tech"><div class="wrap grid2">
+  <div><h2 data-i18n="h_tests"></h2><div class="scroll"><table class="stack wrapl" id="ttests"></table></div></div>
+  <div><h2 id="hthr"></h2><div class="scroll"><table class="stack" id="tthr"></table></div><p class="small mute" id="cthr"></p></div>
+</div></section>
+
+<!-- Scientist extras: raw data export and references. -->
+<section class="band hidden" id="audtail"><div class="wrap" id="audtailin"></div></section>
+
+<section class="band reveal" data-depth="methods"><div class="wrap">
+  <h2 data-i18n="methods"></h2>
+  <p class="small mute" data-i18n="techNote"></p>
+  <div id="methods" class="small"></div>
+</div></section>
+<section class="band lv-t"><div class="wrap">
+  <div class="actions"><button id="copy" data-i18n="copy"></button><button id="dl" class="hidden" data-i18n="download"></button><span id="copied" class="small mute"></span></div>
+</div></section>
+</div>
+</div>
+<footer><span data-i18n="footer"></span> <button type="button" id="citeBtn" class="linkbtn" data-i18n="cite_link"></button></footer>
+<div id="cite" class="pv" role="dialog" aria-modal="true" aria-labelledby="citeTitle" hidden>
+  <div class="pv-box card"><div class="pv-head"><h3 id="citeTitle" data-i18n="cite_h"></h3><button id="citeClose" class="hclose" type="button" data-i18n-aria="helper_close">×</button></div>
+  <div class="pv-body cite-body"><p class="mute" data-i18n="cite_p"></p>
+<h4>Data</h4><ol>
+<li>Christensen, P. R., et al. (2001). Mars Global Surveyor Thermal Emission Spectrometer experiment: Investigation description and surface science results. <i>Journal of Geophysical Research: Planets</i>, 106(E10), 23823–23871. <a href="https://doi.org/10.1029/2000JE001370">doi:10.1029/2000JE001370</a>. TES data from the <a href="https://pds-geosciences.wustl.edu/">PDS Geosciences Node</a> (Gale crater, Jezero crater and Olympus Mons temperatures).</li>
+<li>Smith, D. E., et al. (2001). Mars Orbiter Laser Altimeter: Experiment summary after the first year of global mapping of Mars. <i>Journal of Geophysical Research: Planets</i>, 106(E10), 23689–23722. <a href="https://doi.org/10.1029/2000JE001364">doi:10.1029/2000JE001364</a>. MOLA gridded topography from the <a href="https://pds-geosciences.wustl.edu/">PDS Geosciences Node</a>.</li>
+<li>Campbell, J. L., et al. (2012). Calibration of the Mars Science Laboratory Alpha Particle X-ray Spectrometer. <i>Space Science Reviews</i>, 170, 319–340. <a href="https://doi.org/10.1007/s11214-012-9873-5">doi:10.1007/s11214-012-9873-5</a>. Curiosity APXS results from the <a href="https://pds-geosciences.wustl.edu/">PDS Geosciences Node</a>.</li>
+<li>Wiens, R. C., et al. (2012). The ChemCam instrument suite on the Mars Science Laboratory (MSL) rover: Body unit and combined system tests. <i>Space Science Reviews</i>, 170, 167–227. <a href="https://doi.org/10.1007/s11214-012-9902-4">doi:10.1007/s11214-012-9902-4</a>. ChemCam calibration standards from the <a href="https://pds-geosciences.wustl.edu/">PDS Geosciences Node</a>.</li>
+<li>Wan, Z. (2014). New refinements and validation of the collection-6 MODIS land-surface temperature/emissivity product. <i>Remote Sensing of Environment</i>, 140, 36–45. MODIS Aqua land surface temperature imagery from NASA <a href="https://nasa-gibs.github.io/gibs-api-docs/">GIBS</a> and <a href="https://worldview.earthdata.nasa.gov/">Worldview</a>, part of NASA’s Earth Science Data and Information System (ESDIS).</li>
+<li>NASA/METI/AIST/Japan Spacesystems and U.S./Japan ASTER Science Team (2019). ASTER Global Digital Elevation Model V003. NASA EOSDIS Land Processes DAAC. <a href="https://doi.org/10.5067/ASTER/ASTGTM.003">doi:10.5067/ASTER/ASTGTM.003</a>.</li>
+<li>NASA Langley Research Center (2023 data). Prediction Of Worldwide Energy Resources (POWER) project, hourly surface skin temperature (TS). <a href="https://power.larc.nasa.gov/">power.larc.nasa.gov</a>. Funded through the NASA Earth Science/Applied Science Program.</li>
+<li>U.S. Geological Survey (1998). Certificate of Analysis, Basalt, Hawaiian Volcanic Observatory, BHVO-2. Data compilation by Wilson, S. A. (1997). Used with published granite and granodiorite reference values for the composition sets.</li>
+<li>NASA Blue Marble imagery for the globe: NASA Earth Observatory, <a href="https://visibleearth.nasa.gov/">Visible Earth</a>, Blue Marble collection.</li>
+</ol>
+<h4>Methods</h4><ol>
+<li>Silverman, B. W. (1986). <i>Density Estimation for Statistics and Data Analysis</i>. Chapman and Hall. (Kernel density overlap.)</li>
+<li>Welch, B. L. (1947). The generalization of “Student’s” problem when several different population variances are involved. <i>Biometrika</i>, 34(1–2), 28–35. <a href="https://doi.org/10.1093/biomet/34.1-2.28">doi:10.1093/biomet/34.1-2.28</a>.</li>
+<li>Massey, F. J. (1951). The Kolmogorov-Smirnov test for goodness of fit. <i>Journal of the American Statistical Association</i>, 46(253), 68–78. <a href="https://doi.org/10.1080/01621459.1951.10500769">doi:10.1080/01621459.1951.10500769</a>.</li>
+<li>Villani, C. (2009). <i>Optimal Transport: Old and New</i>. Springer. (Wasserstein distance.)</li>
+<li>Cohen, J. (1988). <i>Statistical Power Analysis for the Behavioral Sciences</i> (2nd ed.). Lawrence Erlbaum. (Cohen’s d.)</li>
+<li>Efron, B. (1979). Bootstrap methods: Another look at the jackknife. <i>The Annals of Statistics</i>, 7(1), 1–26. <a href="https://doi.org/10.1214/aos/1176344552">doi:10.1214/aos/1176344552</a>.</li>
+<li>Strahler, A. N. (1952). Hypsometric (area-altitude) analysis of erosional topography. <i>Geological Society of America Bulletin</i>, 63(11), 1117–1142.</li>
+<li>Aitchison, J. (1982). The statistical analysis of compositional data. <i>Journal of the Royal Statistical Society, Series B</i>, 44(2), 139–177.</li>
+<li>Bray, J. R., and Curtis, J. T. (1957). An ordination of the upland forest communities of southern Wisconsin. <i>Ecological Monographs</i>, 27(4), 325–349.</li>
+<li>Nesbitt, H. W., and Young, G. M. (1982). Early Proterozoic climates and plate motions inferred from major element chemistry of lutites. <i>Nature</i>, 299, 715–717. (Chemical Index of Alteration.)</li>
+<li>Le Bas, M. J., Le Maitre, R. W., Streckeisen, A., and Zanettin, B. (1986). A chemical classification of volcanic rocks based on the total alkali-silica diagram. <i>Journal of Petrology</i>, 27(3), 745–750.</li>
+<li>International Civil Aviation Organization (1993). <i>Manual of the ICAO Standard Atmosphere</i>, Doc 7488/3. (6.5 K/km lapse rate for the elevation correction.)</li>
+</ol>
+<h4>Analog sites</h4><ol>
+<li>Navarro-González, R., et al. (2003). Mars-like soils in the Atacama Desert, Chile, and the dry limit of microbial life. <i>Science</i>, 302(5647), 1018–1021. <a href="https://doi.org/10.1126/science.1089143">doi:10.1126/science.1089143</a>.</li>
+<li>NASA Planetary Data System, <a href="https://pds.nasa.gov/">pds.nasa.gov</a>, and NASA Earthdata, <a href="https://www.earthdata.nasa.gov/">earthdata.nasa.gov</a>, for all archived mission and Earth observation data.</li>
+</ol>
+  </div></div>
+</div>
+<div id="pv" class="pv" role="dialog" aria-modal="true" aria-labelledby="pvTitle" hidden>
+  <div class="pv-box card"><div class="pv-head"><h3 id="pvTitle"></h3><button id="pvClose" class="hclose" type="button" data-i18n-aria="helper_close">×</button></div><div id="pvBody" class="pv-body"></div></div>
+</div>
+<button id="helperFab" class="hfab" aria-expanded="false" aria-controls="helper"><span aria-hidden="true">?</span> <span data-i18n="helper_open"></span></button>
+<aside id="helper" class="helper" aria-labelledby="helperTitle">
+  <div class="hhead"><strong id="helperTitle" data-i18n="helper_title"></strong><button id="helperClose" class="hclose" data-i18n-aria="helper_close">×</button></div>
+  <div id="helperLog" class="hlog" aria-live="polite"></div>
+  <form id="helperForm" class="hform"><input id="helperInput" type="text" maxlength="2000" autocomplete="off" data-i18n-ph="helper_ph" data-i18n-aria="helper_ph"><button id="helperSend" type="submit" class="go" data-i18n="helper_send"></button></form>
+</aside>
+</div>
+<!-- Introduction shown after the globe is pressed, before the comparer. Filled in by js/briefing.js. -->
+<div id="brief" class="brief hidden" role="dialog" aria-modal="true" aria-labelledby="briefTitle" aria-hidden="true">
+  <div class="briefcard">
+    <button type="button" id="briefClose" class="hclose briefx" aria-label="Close introduction">×</button>
+    <p class="small mute briefkicker">Introduction</p>
+    <h2 id="briefTitle">Pick an Earth analog</h2>
+    <div id="briefList" class="briefsites" role="group" aria-label="Earth analog sites"></div>
+    <h3 id="briefPlace" class="briefplace"></h3>
+    <p id="briefWhy"></p>
+    <p id="briefPair" class="mute"></p>
+    <p id="briefPick" class="small mute"></p>
+    <h3 id="briefHow" class="briefplace"></h3>
+    <ol id="briefSteps" class="briefsteps"></ol>
+    <p id="briefNote" class="small mute"></p>
+    <div class="actions"><button type="button" id="briefLaunch" class="go big">Launch Comparer</button></div>
+  </div>
+</div>
+
+<!-- Scripts: Earth image, translations, analysis engine, example data (optional), intro animation, Marvin-AI, the page logic, introduction dialog, then the audience modes. -->
+<script src="js/earth-texture.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/analog-engine.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/library.js"></script>
+<script src="js/intro.js"></script>
+<script src="js/app.js"></script>
+<script src="js/briefing.js"></script>
+<script src="js/audience.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+/* Planetary Analog Lab: audience modes. Loaded after styles.css and uses its colours (--ink, --mute, --line, --earth, --cel ...).
+   <body data-audience="auto | kids | students | educators | scientist | manager"> is set by js/audience.js.
+   Sections of the results carry data-depth="assess | tech | methods" so a mode can hide the ones it does not need. */
+
+/* ---------- top bar: audience pills on the left, language on the right ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:8px 14px;padding:8px max(16px,2vw);background:rgba(5,8,22,.82);border-bottom:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.topbar .tb-item{position:static;flex:none;margin-inline-start:auto}
+.topbar .tb-item + .tb-item,.topbar .tb-item + .tb-btn{margin-inline-start:0}
+.audbar{display:flex;align-items:center;gap:12px;flex:1 1 auto;min-width:0}
+.audlabel{font-size:14px;color:var(--mute);white-space:nowrap;font-weight:600}
+.audpills{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:3px;min-width:0}
+.audpills::-webkit-scrollbar{display:none}
+.audpills button{flex:none;min-height:40px;padding:6px 14px;font-size:15px;white-space:nowrap;background:transparent}
+.audpills button[aria-pressed=true]{background:#fff;color:#08112e;border-color:#fff}
+.audpills button:focus-visible{outline-offset:-1px}
+.intro{padding-top:calc(var(--tbh,60px) + 16px)}
+.app header.band,.story{padding-top:calc(var(--tbh,60px) + clamp(18px,3vw,44px))}
+.audnote{color:var(--accent);font-size:15px;margin-top:8px}
+.intro .audnote{max-width:40ch;margin:10px auto 0}
+
+/* ---------- audience panel ---------- */
+.audpanel{padding-top:8px;padding-bottom:8px}
+.audpanel h2{margin-bottom:10px}
+.audh{margin-top:22px}
+.audtabs{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px}
+.audtabs button[aria-selected=true]{background:#fff;color:#08112e;border-color:#fff}
+.audgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.audgrid.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.audgrid .card{padding:18px}
+.audgrid .card h3{font-size:18px}
+.audpanel a,.audresultsin a,#audtailin a{color:var(--earth);text-underline-offset:3px}
+.jump{margin-top:16px}
+.jump a{font-weight:600}
+table.audtable th,table.audtable td{text-align:left;white-space:normal;vertical-align:top}
+table.audtable td:first-child{min-width:170px}
+table.audtable button{min-height:38px;padding:6px 14px;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.chips button{min-height:38px;padding:6px 14px;font-size:15px}
+.chips button[aria-pressed=true]{background:linear-gradient(135deg,#5b7bff,#62adff);color:#06102a;border-color:transparent}
+.msg.preview{margin:0 0 16px}
+.msg.preview button{min-height:36px;padding:4px 14px;margin-inline-start:8px;font-size:15px}
+
+/* ---------- educators ---------- */
+.trybox{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;border-color:rgba(98,173,255,.55)}
+.trybox h3{font-size:20px}
+.lesson{display:flex;flex-direction:column;gap:2px}
+.lesson button{margin-top:auto;align-self:flex-start}
+.lesson p{margin-bottom:10px}
+.lessonhead{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.agechip{flex:none;font-size:13px;font-weight:700;color:var(--accent);border:1px solid currentColor;border-radius:99px;padding:1px 10px;white-space:nowrap}
+.eduform{max-width:760px}
+.eduform textarea{width:100%;font:inherit;color:var(--ink);padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(4,8,26,.7);resize:vertical}
+.eduform .actions{margin-top:16px}
+
+/* ---------- managers ---------- */
+.stat .statnum{font-family:var(--head);font-weight:700;font-size:clamp(28px,3vw,36px);line-height:1.1;margin-bottom:6px}
+.case{margin:0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 14px}
+.case dt{color:var(--mute);font-weight:600;font-size:14px;padding-top:2px}
+.case dd{margin:0}
+.invfilters{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.invsum{font-weight:600;margin:14px 0 8px}
+table.inv td:nth-child(3){white-space:nowrap;font-weight:600}
+.status{display:inline-block;font-size:13px;font-weight:700;border:1px solid currentColor;border-radius:99px;padding:1px 10px;white-space:nowrap;color:var(--mute)}
+.status.s-delivered{color:var(--good)}.status.s-partlydelivered{color:var(--warn)}.status.s-notdelivered{color:var(--bad)}.status.s-inprogress{color:var(--earth)}
+
+/* ---------- scientists ---------- */
+.matrix{display:grid;gap:14px;margin-top:10px}
+.mrow{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,3fr);gap:10px 16px;align-items:stretch}
+.mhead{display:flex;flex-direction:column;gap:2px;justify-content:center}
+.mhead .mval{font-family:var(--head);font-size:26px;font-weight:700}
+.mcells{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px}
+.mcell{display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-height:84px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(98,173,255,calc(.06 + .5 * var(--v)))}
+.mcell .mname{font-size:13px;line-height:1.3;overflow-wrap:anywhere}
+.mcell .mval{font-family:var(--head);font-weight:700;font-size:20px}
+.refs{padding-inline-start:22px;display:grid;gap:10px;font-size:15px}
+.refs a{overflow-wrap:anywhere}
+
+/* ---------- kids ---------- */
+.kidcard h2{font-size:clamp(24px,2.6vw,30px)}
+.kidbig{font-size:1.2em;font-weight:600}
+.kidsteps{padding-inline-start:24px;display:grid;gap:8px}
+.kidlist{display:grid;gap:10px;padding-inline-start:22px}
+.factbox{margin-top:16px;padding:14px 16px;border-radius:14px;border:1px dashed rgba(255,141,94,.6);background:rgba(255,141,94,.08)}
+.factbox p{font-size:1.1em;min-height:3.2em}
+body[data-audience=kids]{font-size:18px}
+body[data-audience=kids] .lede{font-size:20px}
+body[data-audience=kids] .small{font-size:16px}
+body[data-audience=kids] button{min-height:52px;font-size:18px}
+body[data-audience=kids] .audpills button{min-height:40px;font-size:15px}
+body[data-audience=kids] input[type=text],body[data-audience=kids] select{min-height:52px;font-size:18px}
+body[data-audience=kids] .topbar select{min-height:38px;font-size:16px}
+body[data-audience=kids] .toggle{font-size:20px}
+body[data-audience=kids] .drop{padding:26px 18px}
+body[data-audience=kids] .topic p{min-height:0}
+/* Kids see the score, the picture and a plain summary. Sliders, options and the technical sections are put away. */
+body[data-audience=kids] .slider,body[data-audience=kids] details.key,body[data-audience=kids] .unitpick,body[data-audience=kids] #ex2,
+body[data-audience=kids] [data-depth],body[data-audience=kids] #bars,body[data-audience=kids] #vline,body[data-audience=kids] #chero,body[data-audience=kids] .pshare{display:none!important}
+
+/* ---------- managers see the verdict, the recommendation and the report buttons ---------- */
+body[data-audience=manager] [data-depth=tech],body[data-audience=manager] #methods,body[data-audience=manager] [data-i18n=techNote],body[data-audience=manager] #ex2{display:none!important}
+
+/* ---------- small screens ---------- */
+@media(max-width:860px){.audgrid.two{grid-template-columns:minmax(0,1fr)}.mrow{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:760px){
+  .topbar{flex-wrap:wrap;padding:6px 10px 8px}
+  .audbar{order:2;flex-basis:100%}
+  .audlabel{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .topbar .tb-item,.topbar .tb-btn{order:1}
+  .topbar .tb-item{flex:1 1 0;min-width:0;margin-inline-start:0}
+  .topbar .tb-item select{width:100%}
+  .audpills{mask-image:linear-gradient(90deg,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);padding-inline-end:28px}
+  .audpills button{padding:6px 12px}
+}
+@media(max-width:600px){
+  table.audtable td:first-child{min-width:0}
+  table.audtable.stack td{text-align:left;display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+  table.audtable.stack td::before{font-size:12px}
+  table.inv td:nth-child(3){white-space:normal}
+  .case{grid-template-columns:minmax(0,1fr);gap:0}.case dd{margin-bottom:8px}
+}
+[dir=rtl] .topbar .tb-item{left:auto}
+
+/* curriculum age-range drop-down */
+.agepick{max-width:260px;margin:4px 0 8px}
